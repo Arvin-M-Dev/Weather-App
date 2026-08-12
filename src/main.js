@@ -130,21 +130,21 @@ const bannerTypes = {
 
 const weatherIcons = {
   // sunny/clear
-  0: "/assets/images/icon-sunny.webp",
+  0: "./assets/images/icon-sunny.webp",
   // party-cloudy
-  2: "/assets/images/icon-partly-cloudy.webp",
+  2: "./assets/images/icon-partly-cloudy.webp",
   // overcast
-  3: "/assets/images/icon-overcast.webp",
+  3: "./assets/images/icon-overcast.webp",
   // storm
-  95: "/assets/images/icon-storm.webp",
+  95: "./assets/images/icon-storm.webp",
   // snow
-  77: "/assets/images/icon-snow.webp",
+  77: "./assets/images/icon-snow.webp",
   // rain
-  61: "/assets/images/icon-rain.webp",
+  61: "./assets/images/icon-rain.webp",
   // drizzle
-  51: "/assets/images/icon-drizzle.webp",
+  51: "./assets/images/icon-drizzle.webp",
   // fog
-  45: "/assets/images/icon-fog.webp",
+  45: "./assets/images/icon-fog.webp",
 };
 
 // ==================== UTILITY FUNCTIONS ====================
