@@ -807,9 +807,6 @@ function animateElements() {
     animate([".current-types", "#daily-forecast-title", ".daily-cards"], {
       opacity: [0, 1],
       y: [-200, 0],
-      autoplay: mobile
-        ? onScroll(document.querySelector(".current-types"), { once: true })
-        : true,
       duration: stagger(200, { start: 500 }),
       delay: stagger(200, { start: 500 }),
       easing: cubicBezier(0.25, 0.1, 0.25, 1),
