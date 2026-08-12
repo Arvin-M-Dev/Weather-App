@@ -185,7 +185,7 @@ function isValidCity(city) {
 }
 
 function getWeatherInfo(code) {
-  return weatherIcons[code] || "/assets/images/icon-sunny.webp";
+  return weatherIcons[code] || "./assets/images/icon-sunny.webp";
 }
 
 function resetUnitButtons(btn) {
