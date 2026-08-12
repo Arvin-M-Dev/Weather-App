@@ -688,16 +688,12 @@ function enableSearchForm() {
 function skeletonShow() {
   mainContentContainer.classList.add("skeletons-container");
   currentWeather.classList.remove("has-image");
-  unitsBtn.disabled = true;
-  daysListBtn.disabled = true;
   disableSearchForm();
 }
 
 function skeletonHide() {
   mainContentContainer.classList.remove("skeletons-container");
   currentWeather.classList.add("has-image");
-  // unitsBtn.disabled = false;
-  daysListBtn.disabled = false;
   enableSearchForm();
 }
 
