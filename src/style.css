@@ -1,0 +1,193 @@
+/* fonts */
+@font-face {
+  font-family: "DM Sans Light";
+  src: url("/assets/fonts/DM_Sans/static/DMSans-Light.ttf") format(truetype);
+}
+
+@font-face {
+  font-family: "DM Sans Medium";
+  src: url("/assets/fonts/DM_Sans/static/DMSans-Medium.ttf") format(truetype);
+}
+
+@font-face {
+  font-family: "DM Sans SemiBold";
+  src: url("/assets/fonts/DM_Sans/static/DMSans-SemiBold.ttf") format(truetype);
+}
+
+@font-face {
+  font-family: "DM Sans SemiBoldItalic";
+  src: url("/assets/fonts/DM_Sans/static/DMSans-SemiBoldItalic.ttf")
+    format(truetype);
+}
+
+@font-face {
+  font-family: "DM Sans Bold";
+  src: url("/assets/fonts/DM_Sans/static/DMSans-Bold.ttf") format(truetype);
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque Bold";
+  src: url("/assets/fonts/Bricolage_Grotesque/static/BricolageGrotesque-Bold.ttf")
+    format(truetype);
+}
+
+@import "tailwindcss";
+
+@theme {
+  /* colors */
+  --color-neutral-900: hsl(243, 96%, 9%);
+  --color-neutral-800: hsl(243, 27%, 20%);
+  --color-neutral-700: hsl(243, 23%, 24%);
+  --color-neutral-600: hsl(243, 23%, 30%);
+  --color-neutral-300: hsl(240, 6%, 70%);
+  --color-neutral-200: hsl(250, 6%, 84%);
+  --color-orange-500: hsl(28, 100%, 52%);
+  --color-blue-500: hsl(233, 67%, 56%);
+  --color-blue-700: hsl(248, 70%, 36%);
+
+  /* breakpoint */
+  --breakpoint-xs: 36rem;
+
+  /* fonts */
+  --font-dmsans-light: "DM Sans Light", sans-serif;
+  --font-dmsans-medium: "DM Sans Medium", sans-serif;
+  --font-dmsans-semibold: "DM Sans SemiBold", sans-serif;
+  --font-dmsans-semibold-italic: "DM Sans SemiBoldItalic", sans-serif;
+  --font-dmsans-bold: "DM Sans Bold", sans-serif;
+  --font-bricolage-grotesque-bold: "Bricolage Grotesque Bold", sans-serif;
+
+  /* animation */
+  --animate-slide-in: slideIn 0.3s ease-out;
+  --animate-slide-out: slideOut 0.3s ease-in;
+  --animate-fade-out: fadeOut 0.3s ease-in forwards;
+  --animate-fade-in: fadeIn 0.3s ease-out forwards;
+  --animate-shimmer: shimmer 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%)
+    }
+    to {
+      transform: translateX(100%)
+    }
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateX(calc(100% + 1.5rem));
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(calc(100% + 1.5rem));
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes progressShrink {
+    to {
+      width: 0;
+    }
+  }
+}
+
+html{
+  @apply scroll-smooth;
+}
+
+svg {
+  @apply pointer-events-none;
+}
+
+.active-btn {
+  @apply bg-neutral-600;
+}
+
+.list-open {
+  @apply visible opacity-100 scale-[1];
+}
+
+.has-image{
+  @apply bg-[url(/assets/images/bg-today-small.svg)] xl:bg-[url(/assets/images/bg-today-large.svg)] bg-no-repeat bg-size-[100%_auto] xs:bg-cover;
+}
+
+#submit-search-btn::after {
+  @apply absolute content-[''] invisible opacity-0 border-2 border-blue-500 -inset-1.25 rounded-2xl transition-all;
+}
+
+#submit-search-btn:focus::after {
+  @apply visible opacity-100;
+}
+
+
+
+/* skeleton styles */
+.skeletons-container .skeleton{
+  @apply relative bg-neutral-700 rounded-full select-none overflow-hidden;
+}
+
+.skeletons-container .skeleton::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: shimmer 2s infinite;
+
+}
+
+.skeletons-container .skeleton-box{
+  @apply bg-neutral-800 rounded-2xl;
+}
+
+.skeletons-container .skeleton-text{
+  @apply text-transparent;
+}
+
+.skeletons-container .skeleton-btn{
+  @apply text-transparent;
+}
+
+.skeletons-container .skeleton-image{
+  @apply size-15;
+  
+}
+
+.skeletons-container .skeleton-image img{
+  @apply invisible;
+}
+
+.skeletons-container .skeleton-image-hourly{
+  @apply size-12;
+  
+} 
+.skeletons-container .skeleton-text-hourly{
+  @apply size-7;
+  
+}

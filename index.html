@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="icon" href="public/assets/images/favicon-32x32.png">
+</head>
+
+<body class="relative font-dmsans-medium text-lg bg-neutral-900 text-white overflow-x-hidden">
+  <svg class="hidden">
+    <symbol id="units" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
+      <path fill="#fff"
+        d="M14.125 7.406c.031.407.031.813 0 1.188l1 .594a.74.74 0 0 1 .344.843c-.344 1.313-1.063 2.5-2 3.469-.25.219-.625.281-.906.125l-1-.594c-.25.188-.72.469-1.032.594v1.156a.733.733 0 0 1-.562.719A7.765 7.765 0 0 1 6 15.5c-.313-.063-.563-.406-.563-.719v-1.156a5.54 5.54 0 0 1-1.03-.594l-1 .594c-.282.156-.657.094-.907-.125-.938-.969-1.656-2.156-2-3.469a.74.74 0 0 1 .344-.844l1-.593c-.032-.156-.032-.406-.032-.594 0-.156 0-.406.032-.594l-1-.562A.74.74 0 0 1 .5 6c.344-1.313 1.063-2.5 2-3.469.25-.219.625-.281.906-.125l1 .594c.25-.188.719-.469 1.032-.594V1.25c0-.344.218-.625.562-.719a7.766 7.766 0 0 1 3.969 0c.312.063.562.406.562.719v1.156c.313.125.781.406 1.031.594l1-.594c.282-.156.657-.094.907.125.937.969 1.656 2.156 2 3.469a.74.74 0 0 1-.344.844l-1 .562Zm-1.656 2c.25-1.312.25-1.469 0-2.781l1.375-.781c-.188-.563-.688-1.375-1.063-1.813l-1.375.782c-.969-.844-1.125-.938-2.375-1.375V1.843C8.75 1.812 8.281 1.75 8 1.75c-.313 0-.781.063-1.063.094v1.593c-1.25.438-1.375.532-2.375 1.376L3.188 4.03c-.468.532-.812 1.157-1.062 1.813l1.375.781c-.25 1.313-.25 1.469 0 2.781l-1.375.781c.188.563.688 1.376 1.063 1.813l1.374-.781c.97.844 1.125.937 2.375 1.375v1.594c.282.03.75.093 1.063.093.281 0 .75-.062 1.031-.094v-1.593c1.25-.438 1.375-.531 2.375-1.375l1.375.781c.375-.438.875-1.25 1.063-1.813l-1.375-.78ZM8 5c1.625 0 3 1.375 3 3 0 1.656-1.375 3-3 3a3 3 0 0 1-3-3c0-1.625 1.344-3 3-3Zm0 4.5A1.5 1.5 0 0 0 9.5 8c0-.813-.688-1.5-1.5-1.5A1.5 1.5 0 0 0 6.5 8c0 .844.656 1.5 1.5 1.5Z" />
+    </symbol>
+    <symbol id="dropwdown" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 13 8">
+      <path fill="currentColor"
+        d="M6.309 7.484 1.105 2.316c-.175-.14-.175-.421 0-.597l.704-.668a.405.405 0 0 1 .597 0l4.219 4.148 4.184-4.148c.175-.176.457-.176.597 0l.703.668c.176.176.176.457 0 .597L6.906 7.484a.405.405 0 0 1-.597 0Z" />
+    </symbol>
+    <symbol id="cheackmark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 11">
+      <path fill="#fff"
+        d="M11.895 1.047c.136-.137.355-.137.464 0l.793.766c.11.136.11.355 0 .464L4.95 10.48a.315.315 0 0 1-.465 0L.82 6.844c-.11-.137-.11-.356 0-.465l.793-.793c.11-.11.328-.11.465 0l2.625 2.652 7.192-7.191Z" />
+    </symbol>
+    <symbol id="search" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21">
+      <path fill="#D4D3D9"
+        d="M19.844 18.82c.195.196.195.508 0 .664l-.899.899c-.156.195-.468.195-.664 0l-4.726-4.727a.63.63 0 0 1-.117-.351v-.508c-1.446 1.21-3.282 1.953-5.313 1.953A8.119 8.119 0 0 1 0 8.625C0 4.172 3.633.5 8.125.5c4.453 0 8.125 3.672 8.125 8.125 0 2.031-.781 3.906-1.992 5.313h.508c.117 0 .234.078.351.156l4.727 4.726ZM8.125 14.875a6.243 6.243 0 0 0 6.25-6.25c0-3.438-2.813-6.25-6.25-6.25a6.243 6.243 0 0 0-6.25 6.25 6.219 6.219 0 0 0 6.25 6.25Z" />
+    </symbol>
+    <symbol id="info" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+    </symbol>
+
+    <symbol id="error" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+    </symbol>
+    <symbol id="warn" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+    </symbol>
+    <symbol id="check-circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </symbol>
+    <symbol id="retry" xmlns="http://www.w3.org/2000/svg" width="16" height="17" fill="none" viewBox="0 0 16 17">
+      <path fill="#fff"
+        d="M15.094 1.406c.25-.25.656-.062.656.25v4.469a.38.38 0 0 1-.375.375h-4.5a.36.36 0 0 1-.25-.625l1.688-1.688A5.992 5.992 0 0 0 8 2.375a6.134 6.134 0 0 0-6.125 5.781c-.031.219-.188.344-.375.344H.625c-.219 0-.406-.156-.375-.375C.438 4.031 3.844.75 8 .75c2.125 0 4.063.875 5.469 2.281l1.625-1.625Zm.25 7.094c.219 0 .406.188.375.406C15.53 13 12.125 16.25 8 16.25c-2.156 0-4.094-.844-5.5-2.25L.875 15.625a.36.36 0 0 1-.625-.25v-4.5a.38.38 0 0 1 .375-.375h4.469c.312 0 .5.406.25.656l-1.688 1.688C4.75 13.969 6.281 14.625 8 14.625a6.1 6.1 0 0 0 6.094-5.75c.031-.219.187-.375.375-.375h.875Z" />
+    </symbol>
+  </svg>
+  <div class="mx-auto max-w-312 px-4">
+    <div
+      class="z-40 fixed top-2 left-4 md:left-auto max-w-none md:w-full md:fixed md:top-28 right-4 md:max-w-100  toast-container">
+    </div>
+    <header class="flex items-center justify-between mt-12">
+      <div>
+        <img src="/assets/images/logo.svg" alt="Logo" class="w-35 xs:w-50">
+      </div>
+      <div class=" relative">
+        <button disabled
+          class="px-2.5 h-8 xs:w-30 xs:h-11 flex items-center justify-center gap-1 xs:gap-2 text-xs xs:text-base transition-all bg-neutral-800 hover:bg-neutral-600 focus:bg-neutral-600 border-2 border-transparent focus:border-white rounded-lg cursor-pointer units-btn">
+          <svg class="size-3 xs:size-4">
+            <use xlink:href="#units"></use>
+          </svg>
+          Units
+          <svg id="unit-chevron" class="w-3 h-1.75 xs:w-3.25 xs:h-2 transition-all">
+            <use xlink:href="#dropwdown"></use>
+          </svg>
+        </button>
+        <ul id="units-list"
+          class="z-50 flex flex-col absolute transition-all invisible opacity-0 scale-[.98] gap-2.5 right-0 w-53 mt-3 shadow-xl/20 border border-neutral-600 bg-neutral-800 py-2 px-1 rounded-lg leading-[100%]">
+          <button
+            class="flex items-start p-2 text-sm xs:text-base transition-all hover:bg-neutral-600 focus:bg-transparent border-2 border-transparent focus:border-white rounded-lg cursor-pointer">Switch
+            to Imperial</button>
+          <li class="flex flex-col gap-2.5 pb-1 border-b border-neutral-600">
+            <h3 class="text-xs xs:text-sm px-2 text-neutral-300 pointer-events-none select-none">Temperature</h3>
+            <div class="flex flex-col gap-1">
+              <button data-name="Celsius"
+                class="flex items-center justify-between p-2 text-sm xs:text-base transition-all hover:bg-neutral-600 rounded-lg cursor-pointer temp-btn active-btn">
+                Celsius (°C)
+                <svg class="h-2.75 w-3.5">
+                  <use xlink:href="#cheackmark"></use>
+                </svg>
+              </button>
+              <button data-name="Fahrenheit"
+                class="flex items-center justify-between p-2 text-sm xs:text-base transition-all hover:bg-neutral-600 rounded-lg cursor-pointer temp-btn">
+                Fahrenheit (°F)
+                <svg class="h-2.75 w-3.5 hidden">
+                  <use xlink:href="#cheackmark"></use>
+                </svg>
+              </button>
+            </div>
+          </li>
+          <li class="flex flex-col gap-2.5 pb-1 border-b border-neutral-600">
+            <h3 class="text-xs xs:text-sm px-2 text-neutral-300 pointer-events-none select-none">Wind Speed</h3>
+            <div class="flex flex-col gap-1">
+              <button data-name="km/h"
+                class="flex items-center justify-between p-2 text-sm xs:text-base transition-all hover:bg-neutral-600 rounded-lg cursor-pointer wind-btn active-btn">
+                km/h
+                <svg class="h-2.75 w-3.5">
+                  <use xlink:href="#cheackmark"></use>
+                </svg>
+              </button>
+              <button data-name="mph"
+                class="flex items-center justify-between p-2 text-sm xs:text-base transition-all hover:bg-neutral-600 rounded-lg cursor-pointer wind-btn">
+                mph
+                <svg class="h-2.75 w-3.5 hidden">
+                  <use xlink:href="#cheackmark"></use>
+                </svg>
+              </button>
+            </div>
+          </li>
+          <li class="flex flex-col gap-2.5">
+            <h3 class="text-xs xs:text-sm px-2 text-neutral-300 pointer-events-none select-none">Precipitation</h3>
+            <div class="flex flex-col gap-1">
+              <button data-name="mm"
+                class="flex items-center justify-between p-2 text-sm xs:text-base transition-all hover:bg-neutral-600 rounded-lg cursor-pointer prec-btn active-btn">
+                Millimeters (mm)
+                <svg class="h-2.75 w-3.5">
+                  <use xlink:href="#cheackmark"></use>
+                </svg>
+              </button>
+              <button data-name="in"
+                class="flex items-center justify-between p-2 text-sm xs:text-base transition-all hover:bg-neutral-600 rounded-lg cursor-pointer prec-btn">
+                Inches (in)
+                <svg class="h-2.75 w-3.5 hidden">
+                  <use xlink:href="#cheackmark"></use>
+                </svg>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <main class="mb-20 mt-18 xs:mt-21.5">
+      <div id="error-container" class="hidden flex-col items-center text-center gap-4">
+        <img src="/assets/images/icon-error.svg" class="size-10.5" alt="error">
+        <h1 class="text-[54px] leading-16 md:leading-normal font-bricolage-grotesque-bold">Something went wrong</h1>
+        <p class="text-xl w-full max-w-136 text-neutral-300 leading-6">
+          We couldn't connect to the server (API error). Please try again in a few moments.
+        </p>
+        <button
+          class="flex items-center justify-center gap-1 py-1.75 px-4 mt-2 transition-all bg-neutral-800 hover:bg-neutral-600 focus:bg-neutral-600 border-2 border-transparent focus:border-white rounded-lg cursor-pointer">
+          <svg class="size-5">
+            <use xlink:href="#retry"></use>
+          </svg>
+          Retry
+        </button>
+      </div>
+      <div id="main-container">
+        <h1 class="text-[54px] text-center font-bricolage-grotesque-bold mb-12.5 xs:mb-16">How's the sky
+          looking today?</h1>
+        <form id="form" class="flex flex-col xs:flex-row xs:items-center gap-4 justify-center">
+          <div class="relative w-full max-w-131">
+            <div
+              class="select-none flex items-center transition-all border-2 border-transparent has-focus:border-blue-500   bg-neutral-800 px-5.5 py-3.5 rounded-xl gap-3.5">
+              <svg class="size-5.25">
+                <use xlink:href="#search"></use>
+              </svg>
+              <input id="from-input" type="text" autocomplete="off" placeholder="Search for a place..."
+                class="w-full outline-0  placeholder:text-neutral-200" disabled>
+            </div>
+            <div id="search-result"
+              class="z-50 relative xs:absolute top-full left-0 right-0 hidden flex-col p-2 mt-3 items-start gap-1 bg-neutral-800 rounded-xl">
+            </div>
+          </div>
+          <button disabled id="submit-search-btn"
+            class="relative outline-0 flex items-center justify-center py-3.5 px-7 transition-all bg-blue-500 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl cursor-pointer"
+            type="submit">Search</button>
+        </form>
+        <div class="flex flex-col lg:flex-row gap-8 mt-11.25 main-content-container skeletons-container">
+          <div class="flex flex-col gap-8 grow">
+            <div class="flex flex-col gap-4 xs:gap-13">
+              <div id="current-weather"
+                class="flex items-center gap-4 md:gap-0 justify-between h-full min-h-71 md:flex-row flex-col py-11.5 md:py-0 px-6 skeleton skeleton-box">
+                <div class="flex flex-col gap-3">
+                  <h2 class="text-[29px] font-dmsans-semibold skeleton skeleton-text" data-skeleton="city-name">Berlin,
+                    Germany</h2>
+                  <p class="text-neutral-200 skeleton skeleton-text" id="current-date" data-skeleton="now-date">11</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="skeleton skeleton-image size-30" data-skeleton="current-icon">
+                    <img src="/assets/images/icon-sunny.webp" alt="weatherIcon" class="size-full opacity-0 invisible">
+                  </div>
+                  <h1 class="text-[92px] font-dmsans-semibold-italic skeleton skeleton-text"
+                    data-skeleton="current-temp">20°</h1>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 xs:gap-6">
+                <div id="current-feels-like"
+                  class="current-types flex flex-col justify-between gap-8 rounded-xl border border-neutral-600 px-5.5 pt-5.5 pb-6 bg-neutral-800 leading-[100%]">
+                  <p class="font-dmsans-light text-neutral-300 skeleton skeleton-text"
+                    data-skeleton="current-feels-like-title">Feels like</p>
+                  <h2 class="text-[28px] font-dmsans-light skeleton skeleton-text" data-skeleton="current-feels-like">
+                    18°
+                </div>
+                <div id="current-humidity"
+                  class="current-types flex flex-col justify-between gap-8 rounded-xl border border-neutral-600 px-5.5 pt-5.5 pb-6 bg-neutral-800 leading-[100%]">
+                  <p class="font-dmsans-light text-neutral-300 skeleton skeleton-text"
+                    data-skeleton="current-humidity-title">Humidity</p>
+                  <h2 class="text-[28px] font-dmsans-light skeleton skeleton-text" data-skeleton="current-humidity">46%
+                  </h2>
+                </div>
+                <div id="current-wind-speed"
+                  class="current-types flex flex-col justify-between gap-8 rounded-xl border border-neutral-600 px-5.5 pt-5.5 pb-6 bg-neutral-800 leading-[100%]">
+                  <p class="font-dmsans-light text-neutral-300 skeleton skeleton-text"
+                    data-skeleton="current-wind-speed-title">Wind</p>
+                  <h2 class="text-[28px] font-dmsans-light skeleton skeleton-text" data-skeleton="current-wind-speed">14
+                    km/h</h2>
+                </div>
+                <div id="current-Precipitation"
+                  class="current-types flex flex-col justify-between gap-8 rounded-xl border border-neutral-600 px-5.5 pt-5.5 pb-6 bg-neutral-800 leading-[100%]">
+                  <p class="font-dmsans-light text-neutral-300 skeleton skeleton-text"
+                    data-skeleton="current-Precipitation-title">
+                    Precipitation</p>
+                  <h2 class="text-[28px] font-dmsans-light skeleton skeleton-text"
+                    data-skeleton="current-Precipitation">0 mm</h2>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-5 h-full">
+              <h3 id="daily-forecast-title" class="font-dmsans-semibold skeleton skeleton-text w-30" data-skeleton="daily-forecast-title">Daily
+                forecast</h3>
+              <div id="daily-container" class="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-7 gap-4 h-full">
+                <div
+                  class="flex flex-col items-center justify-between gap-2.75 py-5 px-2.5 leading-[100%] bg-neutral-800 border border-neutral-600 rounded-xl">
+                  <h4 class="skeleton skeleton-text w-8" data-skeleton="daily-forecast-card-title">Tue</h4>
+                  <div class="w-13 h-13 xs:w-16 xs:h-16 skeleton skeleton-image" data-skeleton="daily-forecast-card-icon">
+                    <img src="public/assets/images/icon-rain.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <div class="flex items-center justify-between w-full">
+                    <p class="skeleton skeleton-text w-6.5" data-skeleton="daily-forecast-card-temp">20°</p>
+                    <p class="skeleton skeleton-text w-4" data-skeleton="daily-forecast-card-wind-speed">16</p>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col items-center justify-between gap-2.75 py-5 px-2.5 leading-[100%] bg-neutral-800 border border-neutral-600 rounded-xl">
+                  <h4 class="skeleton skeleton-text w-8" data-skeleton="daily-forecast-card-title">Tue</h4>
+                  <div class="w-13 h-13 xs:w-16 xs:h-16 skeleton skeleton-image" data-skeleton="daily-forecast-card-icon">
+                    <img src="public/assets/images/icon-rain.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <div class="flex items-center justify-between w-full">
+                    <p class="skeleton skeleton-text w-6.5" data-skeleton="daily-forecast-card-temp">20°</p>
+                    <p class="skeleton skeleton-text w-4" data-skeleton="daily-forecast-card-wind-speed">16</p>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col items-center justify-between gap-2.75 py-5 px-2.5 leading-[100%] bg-neutral-800 border border-neutral-600 rounded-xl">
+                  <h4 class="skeleton skeleton-text w-8" data-skeleton="daily-forecast-card-title">Tue</h4>
+                  <div class="w-13 h-13 xs:w-16 xs:h-16 skeleton skeleton-image" data-skeleton="daily-forecast-card-icon">
+                    <img src="public/assets/images/icon-rain.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <div class="flex items-center justify-between w-full">
+                    <p class="skeleton skeleton-text w-6.5" data-skeleton="daily-forecast-card-temp">20°</p>
+                    <p class="skeleton skeleton-text w-4" data-skeleton="daily-forecast-card-wind-speed">16</p>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col items-center justify-between gap-2.75 py-5 px-2.5 leading-[100%] bg-neutral-800 border border-neutral-600 rounded-xl">
+                  <h4 class="skeleton skeleton-text w-8" data-skeleton="daily-forecast-card-title">Tue</h4>
+                  <div class="w-13 h-13 xs:w-16 xs:h-16 skeleton skeleton-image" data-skeleton="daily-forecast-card-icon">
+                    <img src="public/assets/images/icon-rain.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <div class="flex items-center justify-between w-full">
+                    <p class="skeleton skeleton-text w-6.5" data-skeleton="daily-forecast-card-temp">20°</p>
+                    <p class="skeleton skeleton-text w-4" data-skeleton="daily-forecast-card-wind-speed">16</p>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col items-center justify-between gap-2.75 py-5 px-2.5 leading-[100%] bg-neutral-800 border border-neutral-600 rounded-xl">
+                  <h4 class="skeleton skeleton-text w-8" data-skeleton="daily-forecast-card-title">Tue</h4>
+                  <div class="w-13 h-13 xs:w-16 xs:h-16 skeleton skeleton-image" data-skeleton="daily-forecast-card-icon">
+                    <img src="public/assets/images/icon-rain.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <div class="flex items-center justify-between w-full">
+                    <p class="skeleton skeleton-text w-6.5" data-skeleton="daily-forecast-card-temp">20°</p>
+                    <p class="skeleton skeleton-text w-4" data-skeleton="daily-forecast-card-wind-speed">16</p>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col items-center justify-between gap-2.75 py-5 px-2.5 leading-[100%] bg-neutral-800 border border-neutral-600 rounded-xl">
+                  <h4 class="skeleton skeleton-text w-8" data-skeleton="daily-forecast-card-title">Tue</h4>
+                  <div class="w-13 h-13 xs:w-16 xs:h-16 skeleton skeleton-image" data-skeleton="daily-forecast-card-icon">
+                    <img src="public/assets/images/icon-rain.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <div class="flex items-center justify-between w-full">
+                    <p class="skeleton skeleton-text w-6.5" data-skeleton="daily-forecast-card-temp">20°</p>
+                    <p class="skeleton skeleton-text w-4" data-skeleton="daily-forecast-card-wind-speed">16</p>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col items-center justify-between gap-2.75 py-5 px-2.5 leading-[100%] bg-neutral-800 border border-neutral-600 rounded-xl">
+                  <h4 class="skeleton skeleton-text w-8" data-skeleton="daily-forecast-card-title">Tue</h4>
+                  <div class="w-13 h-13 xs:w-16 xs:h-16 skeleton skeleton-image" data-skeleton="daily-forecast-card-icon">
+                    <img src="public/assets/images/icon-rain.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <div class="flex items-center justify-between w-full">
+                    <p class="skeleton skeleton-text w-6.5" data-skeleton="daily-forecast-card-temp">20°</p>
+                    <p class="skeleton skeleton-text w-4" data-skeleton="daily-forecast-card-wind-speed">16</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside
+            class="aside w-full max-w-none lg:max-w-95 h-full flex flex-col bg-neutral-800 px-4 py-6 xs:p-6 gap-4 rounded-2xl">
+            <div class="flex items-center justify-between">
+              <h3 class="leading-[100%] text-xl font-dmsans-semibold skeleton skeleton-text"
+                data-skeleton="hourly-forecast">Hourly forecast</h3>
+              <div class="relative">
+                <button disabled 
+                  class="skeleton skeleton-btn flex items-center justify-center disabled:cursor-not-allowed disabled:pointer-events-none px-3 py-1.5 gap-3 bg-neutral-600 hover:bg-neutral-700 focus:bg-neutral-600 border-2 border-transparent focus:border-white rounded-lg cursor-pointer days-list-btn">
+                  <span id="selected-day-container">Tuesday</span>
+                  <svg id="days-list-chevron" class="w-3 h-1.75 xs:w-3.25 xs:h-2 transition-all">
+                    <use xlink:href="#dropwdown"></use>
+                  </svg>
+                </button>
+                <div id="days-list"
+                  class="z-20 flex flex-col items-start text-left absolute  transition-all invisible opacity-0 scale-[.98] gap-2.5 right-0 w-53 mt-3 shadow-xl/20  border border-neutral-600 bg-neutral-800 py-2 px-1 rounded-lg leading-[100%]">
+
+                </div>
+              </div>
+            </div>
+            <div id="hurly-forecast" class="flex flex-col gap-4">
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+              <div class="px-4 h-15  flex items-center justify-between bg-neutral-600 rounded-lg">
+                <div class="flex items-center gap-2">
+                  <div class="skeleton skeleton-image skeleton-image-hourly w-13 h-13 xs:w-16 xs:h-16" data-skeleton="hourly-forecast-icon">
+                    <img src="/assets/images/icon-drizzle.webp" alt="weatherIcon" class="size-full">
+                  </div>
+                  <p class="skeleton skeleton-text" data-skeleton="hourly-forecast-time">5 PM</p>
+                </div>
+                <p class="skeleton skeleton-text skeleton-text-hourly" data-skeleton="hourly-forecast-temp">16°</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
